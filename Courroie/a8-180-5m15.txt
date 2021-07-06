@@ -1,0 +1,3 @@
+﻿"Symbol";"Value";"Unit";
+"REFERENCE";"A8-180-5M15";"";
+"SUPPLIER";"Michaud Chailly";"";
