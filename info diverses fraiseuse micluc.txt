@@ -1,0 +1,17 @@
+usinage tout matériaux,tolérance H7,g6.
+
+pour celà il faut de préférence le rapport vis moteur 1/2; 
+la vis à bille r16 pas de 5 ct3 précision 0-023 sur 300mm, imperatif jeu axial ZERO , c'est un supplément indispenssable lors d'une interpolation circulaire pour réaliser Un alésageH7. 
+
+
+Moteurs pap,4.2A, vis pas de 5 rapport 1/2
+
+vitesse déplacement maxi 1800mm minute,test je n'ai pas réussi à bloquer la table en vitesse travail ,donc je pourrai faire des passes corrects, courant coupé malgré le poids du Z il reste en place.
+
+Motorisation en complément de la page 6.
+moteur 220/380 0.55KW 2pôles 3000tr/min.B3
+Variateur de fréquence CUB 220vMoni 0.75KW5A.
+Poutre 260x160x650
+embase 650x650x140
+2 jambages 370x120 hauut 160 bas 270 
+courses en X 400 , 350 en Y, 150 en Z , 300 sous broche
