@@ -1,0 +1,22 @@
+780092-01 N31HRHJ-LEK-M2-00
+
+Bmin = 12.687mm
+Bmax = 12.700mm
+
+Dmin = 13.665mm
+Dmin = 14.097mm
+
+best case  -> ( 14.097 / 2) - (12.687 / 2 ) = 0.705mm
+Worste -> ( 13.665 / 2) - (12.700 / 2 ) = 0.483mm
+
+0.705mm hight
+
+------
+Beetween 780092-01 9.525mm for coder axes (+0.0000 –0.013 mm) and NI Part Number Manufacturer Part Number A (Thru-Bore Diameter)
+780251-01 15T-01SA-1000-N5RHV-F00-CE 1/4 in., 0.250 in. = 6.35mm
+780252-02 15T-14SA-1000-N5RHV-F00-CE 8 mm
+------
+On nema 34 NI on stepper there is an hole in order to lock gear but nothing on the datasheet ? 
+
+
+
