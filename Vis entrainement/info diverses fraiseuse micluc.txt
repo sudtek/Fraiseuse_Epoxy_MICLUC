@@ -1,0 +1,54 @@
+usinage tout matériaux,tolérance H7,g6.
+
+pour celà il faut de préférence le rapport vis moteur 1/2; 
+la vis à bille r16 pas de 5 ct3 précision 0-023 sur 300mm, imperatif jeu axial ZERO , c'est un supplément indispenssable lors d'une interpolation circulaire pour réaliser Un alésageH7. 
+
+
+Moteurs pap,4.2A, vis pas de 5 rapport 1/2
+
+vitesse déplacement maxi 1800mm minute,test je n'ai pas réussi à bloquer la table en vitesse travail ,donc je pourrai faire des passes corrects, courant coupé malgré le poids du Z il reste en place.
+
+Motorisation en complément de la page 6.
+moteur 220/380 0.55KW 2pôles 3000tr/min.B3
+Variateur de fréquence CUB 220vMoni 0.75KW5A.
+Poutre 260x160x650
+embase 650x650x140
+2 jambages 370x120 hauut 160 bas 270 
+courses en X 400 , 350 en Y, 150 en Z , 300 sous broche 
+
+
+vis à bille roulé ,écrous double, r=16/d=32 x pas=5
+longeur totale :
+longeur filleté :
+Type d'extrémité :
+clase de précision : ct3 0-023 sur 300mm (23µm)
+imperatif jeu axial ZERO via ecrousimple ou ecroudouble !!
+forme flasque A ou B ?
+
+
+VIS ROLLVIS  de www.elitec-tl.com
+programme standard note: La gamme standard s'arrête à diam = 22 le tableau semble coupé !
+RV -> vis rectifié
+BRV -> Vis roulé
+
+vis rectifiée, avec recirculation des rouleaux : RV ou BRV ou programme standard
+Types d'écrou : 2 ecrou simple ou 3 = écrou double (pour jeu axial ZERO ??)
+Exécution de l'écrou : 1 = écrou cylindrique
+Étanchéité : 1 = avec racleur
+Diamètre de vis d0 : 32 mm
+Pas nominal P : 5mm
+Sens du filet : R (à droite)
+Précision du pas : G5 = 23 µm/300 mm
+(RV/RV/programme standard) -211 / 32. 5. R5. 000000 (ecrou simple)
+(RV/RV/programme standard) -311 / 32. 5. R5. 000000 (écrou double)
+
+----------------------------------------------
+Pour l’interpolation circulaire avec un résultat comme je l'ai démontré dans mon fil sur la CN résine époxy, il faut impérativement un écrou précontraint et une vis à bille avec un palier muni de 2 roulements à contact oblique réglable; il y a d'autre solution , comme la butée à billes.
+A partir de là, les vis trapézoïdales, qui avec les années ont une usure irrégulière ( lire la remarque de Taramop ci-dessus ), on peut les placer dans le salon en décoration et en faire un souvenir de la grand-mère.
+
+Je ne suis pas comme certains spécialistes de l'écriture ,qui ont l'art de faire passer des vessies pour des lanternes;
+
+je vais simplement vous dire que lorsque vous en serez à régler l’équerrage de votre X -Y,
+oubliez vite cette technique : " faites un tracé carré en déplacent votre machine en X -Y un crayon à la place de votre fraise puis contrôlez les 2 diagonales ".
+Le titulaire de cette phrase ne sait plus sur quel forum il était : cela lui rafraichira la mémoire : c'était USINAGES.COM.
+Cette méthode est celle des charpentiers, pas de ceux qui se prétendent mécanicien.
