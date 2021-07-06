@@ -1,0 +1,2139 @@
+Language="VBSCRIPT"
+Dim storePath as String
+os=UCase(Left(CATIA.SystemConfiguration.OperatingSystem, 3))
+sep="/"
+If (os = "WIN") Or (os = "INT") Then
+  sep="\"
+end if
+
+' Sub to read the Store Path
+sub readSPath()
+if (len(storePath)=0) then
+  Input = InputBox("Enter Path (e.g. c:"+sep+"catfiles"+sep+")")
+  storePath=Input
+end if
+if (len(storePath)=0) then
+   quit
+end if
+end sub
+
+readSPath
+
+' Sub to store a document'
+sub saveDocument(document,name,ext)
+l=len(storePath)
+if l<>0 then
+  lastChar=mid(storePath,l,1)
+  if lastChar<>sep then
+    storePath=storePath & sep
+  end if
+end if
+if (storePath <> sep) then
+   document.SaveAs storePath & name & ext
+end if
+end sub
+
+' *** tools function '
+function toolCall0(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall0=absref
+end function
+function toolCall1(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-34,21.5)
+set pk=Factory2D.CreatePoint(-34,13)
+set line=factory2d.CreateLine(-34,21.5,-34,13)
+set pk=Factory2D.CreatePoint(-34,13)
+set pk=Factory2D.CreatePoint(-13.5,13)
+set line=factory2d.CreateLine(-34,13,-13.5,13)
+set pk=Factory2D.CreatePoint(-13.5,13)
+set pk=Factory2D.CreatePoint(-13.5,21.5)
+set line=factory2d.CreateLine(-13.5,13,-13.5,21.5)
+set pk=Factory2D.CreatePoint(-13.5,21.5)
+set pk=Factory2D.CreatePoint(-34,21.5)
+set line=factory2d.CreateLine(-13.5,21.5,-34,21.5)
+set pk=Factory2D.CreatePoint(-13.5,0)
+set pk=Factory2D.CreatePoint(-34,0)
+set line=factory2d.CreateLine(-13.5,0,-34,0)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch3=sketch
+PartDocument.Part.Update
+set toolCall1=sketch3
+end function
+function toolCall2(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -15,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -15,0,-1) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -15,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall2=absref
+end function
+function toolCall3(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(0,0)
+set cir=Factory2D.CreateClosedCircle(0,0,38.2)
+set cir=Factory2D.CreateCircle(1.4317436125566e-012,1.6742163211347e-013,19.100000000001,3.2175571753306,3.3274275196481)
+set pk=Factory2D.CreatePoint(-18.771142643896,-3.5290514083108)
+set pk=Factory2D.CreatePoint(-17.614903636042,-3.5038221834097)
+set line=factory2d.CreateLine(-18.771142643896,-3.5290514083108,-17.614903636042,-3.5038221834097)
+set cir=Factory2D.CreateCircle(9.7699626167014e-013,3.2240876635115e-013,17.960000000001,3.3379421944392,3.4688418883387)
+set pk=Factory2D.CreatePoint(-17.006865125732,-5.7730527968448)
+set pk=Factory2D.CreatePoint(-18.020812091831,-6.3293231510897)
+set line=factory2d.CreateLine(-17.006865125732,-5.7730527968448,-18.020812091831,-6.3293231510897)
+set cir=Factory2D.CreateCircle(1.5383250229206e-012,6.2350125062949e-013,19.100000000002,3.4793565631298,3.5892269074472)
+set pk=Factory2D.CreatePoint(-17.218145753079,-8.2671311121657)
+set pk=Factory2D.CreatePoint(-16.107834437927,-7.9435048763333)
+set line=factory2d.CreateLine(-17.218145753079,-8.2671311121657,-16.107834437927,-7.9435048763333)
+set cir=Factory2D.CreateCircle(-1.0160761121369e-012,-5.8264504332328e-013,17.959999999999,3.5997415822383,3.7306412761379)
+set pk=Factory2D.CreatePoint(-14.933194236954,-9.9780413850321)
+set pk=Factory2D.CreatePoint(-15.768618436091,-10.777786072147)
+set line=factory2d.CreateLine(-14.933194236954,-9.9780413850321,-15.768618436091,-10.777786072147)
+set cir=Factory2D.CreateCircle(-6.981082378843e-013,-5.6665783176868e-013,19.099999999999,3.7411559509289,3.8510262952464)
+set pk=Factory2D.CreatePoint(-14.49176068352,-12.441819492807)
+set pk=Factory2D.CreatePoint(-13.503042942322,-11.841850839197)
+set line=factory2d.CreateLine(-14.49176068352,-12.441819492807,-13.503042942322,-11.841850839197)
+set cir=Factory2D.CreateCircle(8.4199314187572e-013,7.9403150721191e-013,17.960000000001,3.8615409700375,3.992440663937)
+set pk=Factory2D.CreatePoint(-11.841850839197,-13.503042942322)
+set pk=Factory2D.CreatePoint(-12.441819492806,-14.49176068352)
+set line=factory2d.CreateLine(-11.841850839197,-13.503042942322,-12.441819492806,-14.49176068352)
+set cir=Factory2D.CreateCircle(5.5955240441108e-013,7.158718062783e-013,19.100000000001,4.0029553387281,4.1128256830455)
+set pk=Factory2D.CreatePoint(-10.777786072146,-15.768618436092)
+set pk=Factory2D.CreatePoint(-9.978041385032,-14.933194236954)
+set line=factory2d.CreateLine(-10.777786072146,-15.768618436092,-9.978041385032,-14.933194236954)
+set cir=Factory2D.CreateCircle(-6.5725203057809e-014,-1.2612133559742e-013,17.96,4.1233403578366,4.2542400517362)
+set pk=Factory2D.CreatePoint(-7.9435048763332,-16.107834437927)
+set pk=Factory2D.CreatePoint(-8.2671311121656,-17.218145753079)
+set line=factory2d.CreateLine(-7.9435048763332,-16.107834437927,-8.2671311121656,-17.218145753079)
+set cir=Factory2D.CreateCircle(-4.4053649617126e-013,-9.4502183856093e-013,19.099999999999,4.2647547265272,4.3746250708447)
+set pk=Factory2D.CreatePoint(-6.3293231510897,-18.020812091831)
+set pk=Factory2D.CreatePoint(-5.7730527968447,-17.006865125732)
+set line=factory2d.CreateLine(-6.3293231510897,-18.020812091831,-5.7730527968447,-17.006865125732)
+set cir=Factory2D.CreateCircle(7.194245199571e-014,4.9737991503207e-014,17.96,4.3851397456358,4.5160394395353)
+set pk=Factory2D.CreatePoint(-3.5038221834096,-17.614903636042)
+set pk=Factory2D.CreatePoint(-3.5290514083108,-18.771142643896)
+set line=factory2d.CreateLine(-3.5038221834096,-17.614903636042,-3.5290514083108,-18.771142643896)
+set cir=Factory2D.CreateCircle(-1.7941204077943e-013,-1.318056774835e-012,19.099999999999,4.5265541143264,4.6364244586439)
+set pk=Factory2D.CreatePoint(-1.4495273169872,-19.044917184312)
+set pk=Factory2D.CreatePoint(-1.1746402009733,-17.921546261365)
+set line=factory2d.CreateLine(-1.4495273169872,-19.044917184312,-1.1746402009733,-17.921546261365)
+set cir=Factory2D.CreateCircle(-2.4535928844216e-014,-1.4210854715202e-014,17.96,4.6469391334349,4.7778388273345)
+set pk=Factory2D.CreatePoint(1.1746402009734,-17.921546261365)
+set pk=Factory2D.CreatePoint(1.4495273169873,-19.044917184312)
+set line=factory2d.CreateLine(1.1746402009734,-17.921546261365,1.4495273169873,-19.044917184312)
+set cir=Factory2D.CreateCircle(2.1538326677728e-014,-1.4210854715202e-014,19.1,4.7883535021255,4.898223846443)
+set pk=Factory2D.CreatePoint(3.5290514083109,-18.771142643896)
+set pk=Factory2D.CreatePoint(3.5038221834097,-17.614903636042)
+set line=factory2d.CreateLine(3.5290514083109,-18.771142643896,3.5038221834097,-17.614903636042)
+set cir=Factory2D.CreateCircle(3.9079850466806e-013,-1.3038459201198e-012,17.959999999999,4.908738521234,5.0396382151336)
+set pk=Factory2D.CreatePoint(5.7730527968448,-17.006865125732)
+set pk=Factory2D.CreatePoint(6.3293231510898,-18.020812091831)
+set line=factory2d.CreateLine(5.7730527968448,-17.006865125732,6.3293231510898,-18.020812091831)
+set cir=Factory2D.CreateCircle(2.6112445539184e-013,-8.0291329140891e-013,19.099999999999,5.0501528899247,5.1600232342422)
+set pk=Factory2D.CreatePoint(8.2671311121657,-17.218145753079)
+set pk=Factory2D.CreatePoint(7.9435048763333,-16.107834437927)
+set line=factory2d.CreateLine(8.2671311121657,-17.218145753079,7.9435048763333,-16.107834437927)
+set cir=Factory2D.CreateCircle(1.0302869668521e-013,-1.1013412404282e-013,17.96,5.1705379090332,5.3014376029328)
+set pk=Factory2D.CreatePoint(9.9780413850321,-14.933194236954)
+set pk=Factory2D.CreatePoint(10.777786072147,-15.768618436091)
+set line=factory2d.CreateLine(9.9780413850321,-14.933194236954,10.777786072147,-15.768618436091)
+set cir=Factory2D.CreateCircle(-1.3145040611562e-013,1.7585932710062e-013,19.1,5.3119522777238,5.4218226220413)
+set pk=Factory2D.CreatePoint(12.441819492807,-14.49176068352)
+set pk=Factory2D.CreatePoint(11.841850839197,-13.503042942322)
+set line=factory2d.CreateLine(12.441819492807,-14.49176068352,11.841850839197,-13.503042942322)
+set cir=Factory2D.CreateCircle(-2.7711166694644e-013,2.7000623958884e-013,17.96,5.4323372968324,5.5632369907319)
+set pk=Factory2D.CreatePoint(13.503042942322,-11.841850839197)
+set pk=Factory2D.CreatePoint(14.49176068352,-12.441819492806)
+set line=factory2d.CreateLine(13.503042942322,-11.841850839197,14.49176068352,-12.441819492806)
+set cir=Factory2D.CreateCircle(-4.7606363295927e-013,3.1263880373444e-013,19.100000000001,5.573751665523,5.6836220098404)
+set pk=Factory2D.CreatePoint(15.768618436092,-10.777786072146)
+set pk=Factory2D.CreatePoint(14.933194236954,-9.978041385032)
+set line=factory2d.CreateLine(15.768618436092,-10.777786072146,14.933194236954,-9.978041385032)
+set cir=Factory2D.CreateCircle(3.3573144264665e-013,-2.3803181647963e-013,17.96,5.6941366846315,5.8250363785311)
+set pk=Factory2D.CreatePoint(16.107834437927,-7.9435048763332)
+set pk=Factory2D.CreatePoint(17.218145753079,-8.2671311121656)
+set line=factory2d.CreateLine(16.107834437927,-7.9435048763332,17.218145753079,-8.2671311121656)
+set cir=Factory2D.CreateCircle(-3.2329694477085e-013,1.6697754290362e-013,19.1,5.8355510533221,5.9454213976396)
+set pk=Factory2D.CreatePoint(18.020812091831,-6.3293231510896)
+set pk=Factory2D.CreatePoint(17.006865125732,-5.7730527968447)
+set line=factory2d.CreateLine(18.020812091831,-6.3293231510896,17.006865125732,-5.7730527968447)
+set cir=Factory2D.CreateCircle(-2.4513724383723e-013,3.7303493627405e-014,17.96,5.9559360724307,6.0868357663302)
+set pk=Factory2D.CreatePoint(17.614903636042,-3.5038221834096)
+set pk=Factory2D.CreatePoint(18.771142643896,-3.5290514083107)
+set line=factory2d.CreateLine(17.614903636042,-3.5038221834096,18.771142643896,-3.5290514083107)
+set cir=Factory2D.CreateCircle(2.3092638912203e-013,-5.7731597280508e-015,19.1,6.0973504411213,6.2072207854387)
+set pk=Factory2D.CreatePoint(19.044917184312,-1.4495273169871)
+set pk=Factory2D.CreatePoint(17.921546261365,-1.1746402009733)
+set line=factory2d.CreateLine(19.044917184312,-1.4495273169871,17.921546261365,-1.1746402009733)
+set cir=Factory2D.CreateCircle(8.4554585555452e-013,-2.2093438190041e-014,17.959999999999,6.2177354602298,0.065449846949796)
+set pk=Factory2D.CreatePoint(17.921546261365,1.1746402009735)
+set pk=Factory2D.CreatePoint(19.044917184312,1.4495273169873)
+set line=factory2d.CreateLine(17.921546261365,1.1746402009735,19.044917184312,1.4495273169873)
+set cir=Factory2D.CreateCircle(1.0658141036402e-012,9.0372154204488e-014,19.099999999999,0.075964521740848,0.18583486605832)
+set pk=Factory2D.CreatePoint(18.771142643896,3.5290514083109)
+set pk=Factory2D.CreatePoint(17.614903636042,3.5038221834098)
+set line=factory2d.CreateLine(18.771142643896,3.5290514083109,17.614903636042,3.5038221834098)
+set cir=Factory2D.CreateCircle(1.0480505352461e-012,3.1974423109205e-013,17.959999999999,0.19634954084936,0.32724923474894)
+set pk=Factory2D.CreatePoint(17.006865125732,5.7730527968449)
+set pk=Factory2D.CreatePoint(18.020812091831,6.3293231510898)
+set line=factory2d.CreateLine(17.006865125732,5.7730527968449,18.020812091831,6.3293231510898)
+set cir=Factory2D.CreateCircle(5.7198690228688e-013,2.2204460492503e-013,19.099999999999,0.33776390954,0.44763425385746)
+set pk=Factory2D.CreatePoint(17.218145753079,8.2671311121657)
+set pk=Factory2D.CreatePoint(16.107834437927,7.9435048763334)
+set line=factory2d.CreateLine(17.218145753079,8.2671311121657,16.107834437927,7.9435048763334)
+set cir=Factory2D.CreateCircle(-1.6218137943724e-012,-9.7877261850954e-013,17.960000000002,0.45814892864853,0.58904862254809)
+set pk=Factory2D.CreatePoint(14.933194236954,9.9780413850321)
+set pk=Factory2D.CreatePoint(15.768618436091,10.777786072147)
+set line=factory2d.CreateLine(14.933194236954,9.9780413850321,15.768618436091,10.777786072147)
+set cir=Factory2D.CreateCircle(1.5099033134902e-013,7.4606987254811e-014,19.1,0.59956329733915,0.70943364165661)
+set pk=Factory2D.CreatePoint(14.49176068352,12.441819492807)
+set pk=Factory2D.CreatePoint(13.503042942322,11.841850839197)
+set line=factory2d.CreateLine(14.49176068352,12.441819492807,13.503042942322,11.841850839197)
+set cir=Factory2D.CreateCircle(-6.981082378843e-013,-6.892264536873e-013,17.960000000001,0.71994831644767,0.85084801034724)
+set pk=Factory2D.CreatePoint(11.841850839197,13.503042942323)
+set pk=Factory2D.CreatePoint(12.441819492806,14.49176068352)
+set line=factory2d.CreateLine(11.841850839197,13.503042942323,12.441819492806,14.49176068352)
+set cir=Factory2D.CreateCircle(5.4356519285648e-013,6.5547567373869e-013,19.099999999999,0.8613626851383,0.97123302945576)
+set pk=Factory2D.CreatePoint(10.777786072146,15.768618436092)
+set pk=Factory2D.CreatePoint(9.978041385032,14.933194236954)
+set line=factory2d.CreateLine(10.777786072146,15.768618436092,9.978041385032,14.933194236954)
+set cir=Factory2D.CreateCircle(-3.4816594052245e-013,-5.8264504332328e-013,17.960000000001,0.98174770424682,1.1126473981464)
+set pk=Factory2D.CreatePoint(7.9435048763332,16.107834437927)
+set pk=Factory2D.CreatePoint(8.2671311121655,17.218145753079)
+set line=factory2d.CreateLine(7.9435048763332,16.107834437927,8.2671311121655,17.218145753079)
+set cir=Factory2D.CreateCircle(-5.6221693967018e-013,-1.2363443602226e-012,19.100000000001,1.1231620729374,1.2330324172549)
+set pk=Factory2D.CreatePoint(6.3293231510896,18.020812091831)
+set pk=Factory2D.CreatePoint(5.7730527968447,17.006865125732)
+set line=factory2d.CreateLine(6.3293231510896,18.020812091831,5.7730527968447,17.006865125732)
+set cir=Factory2D.CreateCircle(1.7497114868092e-013,6.3593574850529e-013,17.959999999999,1.243547092046,1.3744467859455)
+set pk=Factory2D.CreatePoint(3.5038221834096,17.614903636042)
+set pk=Factory2D.CreatePoint(3.5290514083107,18.771142643896)
+set line=factory2d.CreateLine(3.5038221834096,17.614903636042,3.5290514083107,18.771142643896)
+set cir=Factory2D.CreateCircle(1.3367085216487e-013,6.1106675275369e-013,19.099999999999,1.3849614607366,1.4948318050541)
+set pk=Factory2D.CreatePoint(1.4495273169872,19.044917184312)
+set pk=Factory2D.CreatePoint(1.1746402009734,17.921546261365)
+set line=factory2d.CreateLine(1.4495273169872,19.044917184312,1.1746402009734,17.921546261365)
+set cir=Factory2D.CreateCircle(3.441691376338e-015,-8.3844042819692e-013,17.960000000001,1.5053464798451,1.6362461737447)
+set pk=Factory2D.CreatePoint(-1.1746402009734,17.921546261365)
+set pk=Factory2D.CreatePoint(-1.4495273169872,19.044917184312)
+set line=factory2d.CreateLine(-1.1746402009734,17.921546261365,-1.4495273169872,19.044917184312)
+set cir=Factory2D.CreateCircle(6.883382752676e-015,-2.3803181647963e-013,19.1,1.6467608485357,1.7566311928532)
+set pk=Factory2D.CreatePoint(-3.5290514083108,18.771142643896)
+set pk=Factory2D.CreatePoint(-3.5038221834097,17.614903636042)
+set line=factory2d.CreateLine(-3.5290514083108,18.771142643896,-3.5038221834097,17.614903636042)
+set cir=Factory2D.CreateCircle(-1.0214051826551e-013,4.6185277824407e-013,17.96,1.7671458676443,1.8980455615438)
+set pk=Factory2D.CreatePoint(-5.7730527968448,17.006865125732)
+set pk=Factory2D.CreatePoint(-6.3293231510897,18.020812091831)
+set line=factory2d.CreateLine(-5.7730527968448,17.006865125732,-6.3293231510897,18.020812091831)
+set cir=Factory2D.CreateCircle(1.2967404927622e-013,-1.9539925233403e-013,19.1,1.9085602363349,2.0184305806524)
+set pk=Factory2D.CreatePoint(-8.2671311121656,17.218145753079)
+set pk=Factory2D.CreatePoint(-7.9435048763333,16.107834437927)
+set line=factory2d.CreateLine(-8.2671311121656,17.218145753079,-7.9435048763333,16.107834437927)
+set cir=Factory2D.CreateCircle(3.8191672047105e-013,-6.3593574850529e-013,17.960000000001,2.0289452554434,2.159844949343)
+set pk=Factory2D.CreatePoint(-9.9780413850321,14.933194236954)
+set pk=Factory2D.CreatePoint(-10.777786072147,15.768618436092)
+set line=factory2d.CreateLine(-9.9780413850321,14.933194236954,-10.777786072147,15.768618436092)
+set cir=Factory2D.CreateCircle(-1.7941204077943e-013,2.0961010704923e-013,19.1,2.170359624134,2.2802299684515)
+set pk=Factory2D.CreatePoint(-12.441819492807,14.49176068352)
+set pk=Factory2D.CreatePoint(-11.841850839197,13.503042942322)
+set line=factory2d.CreateLine(-12.441819492807,14.49176068352,-11.841850839197,13.503042942322)
+set cir=Factory2D.CreateCircle(4.2277292777726e-013,-3.9790393202566e-013,17.960000000001,2.2907446432426,2.4216443371421)
+set pk=Factory2D.CreatePoint(-13.503042942322,11.841850839197)
+set pk=Factory2D.CreatePoint(-14.49176068352,12.441819492807)
+set line=factory2d.CreateLine(-13.503042942322,11.841850839197,-14.49176068352,12.441819492807)
+set cir=Factory2D.CreateCircle(8.1712414612412e-014,-7.8159700933611e-014,19.1,2.4321590119332,2.5420293562507)
+set pk=Factory2D.CreatePoint(-15.768618436092,10.777786072146)
+set pk=Factory2D.CreatePoint(-14.933194236954,9.978041385032)
+set line=factory2d.CreateLine(-15.768618436092,10.777786072146,-14.933194236954,9.978041385032)
+set cir=Factory2D.CreateCircle(-6.785683126509e-013,3.2862601528905e-013,17.959999999999,2.5525440310417,2.6834437249413)
+set pk=Factory2D.CreatePoint(-16.107834437927,7.9435048763332)
+set pk=Factory2D.CreatePoint(-17.218145753079,8.2671311121656)
+set line=factory2d.CreateLine(-16.107834437927,7.9435048763332,-17.218145753079,8.2671311121656)
+set cir=Factory2D.CreateCircle(6.3238303482649e-013,-2.4602542225693e-013,19.100000000001,2.6939583997323,2.8038287440498)
+set pk=Factory2D.CreatePoint(-18.020812091831,6.3293231510897)
+set pk=Factory2D.CreatePoint(-17.006865125732,5.7730527968448)
+set line=factory2d.CreateLine(-18.020812091831,6.3293231510897,-17.006865125732,5.7730527968448)
+set cir=Factory2D.CreateCircle(4.2632564145606e-014,-3.9079850466806e-014,17.96,2.8143434188409,2.9452431127404)
+set pk=Factory2D.CreatePoint(-17.614903636042,3.5038221834096)
+set pk=Factory2D.CreatePoint(-18.771142643896,3.5290514083108)
+set line=factory2d.CreateLine(-17.614903636042,3.5038221834096,-18.771142643896,3.5290514083108)
+set cir=Factory2D.CreateCircle(4.5830006456526e-013,-5.5955240441108e-014,19.1,2.9557577875315,3.065628131849)
+set pk=Factory2D.CreatePoint(-19.044917184312,1.4495273169872)
+set pk=Factory2D.CreatePoint(-17.921546261365,1.1746402009733)
+set line=factory2d.CreateLine(-19.044917184312,1.4495273169872,-17.921546261365,1.1746402009733)
+set cir=Factory2D.CreateCircle(-1.4210854715202e-014,-5.5067062021408e-014,17.96,3.07614280664,3.2070425005396)
+set pk=Factory2D.CreatePoint(-17.921546261365,-1.1746402009734)
+set pk=Factory2D.CreatePoint(-19.044917184312,-1.4495273169872)
+set line=factory2d.CreateLine(-17.921546261365,-1.1746402009734,-19.044917184312,-1.4495273169872)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch6=sketch
+PartDocument.Part.Update
+set toolCall3=sketch6
+end function
+function toolCall4(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall4=absref
+end function
+function toolCall5(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,0)
+set pk=Factory2D.CreatePoint(-13.5,19.75)
+set line=factory2d.CreateLine(-13.5,0,-13.5,19.75)
+set pk=Factory2D.CreatePoint(-13.5,19.75)
+set pk=Factory2D.CreatePoint(-8.31,19.75)
+set line=factory2d.CreateLine(-13.5,19.75,-8.31,19.75)
+set pk=Factory2D.CreatePoint(-8.31,19.75)
+set pk=Factory2D.CreatePoint(-8.31,11.5)
+set line=factory2d.CreateLine(-8.31,19.75,-8.31,11.5)
+set pk=Factory2D.CreatePoint(-8.31,11.5)
+set pk=Factory2D.CreatePoint(14,8.5)
+set line=factory2d.CreateLine(-8.31,11.5,14,8.5)
+set pk=Factory2D.CreatePoint(14,8.5)
+set pk=Factory2D.CreatePoint(14,0)
+set line=factory2d.CreateLine(14,8.5,14,0)
+set pk=Factory2D.CreatePoint(14,0)
+set pk=Factory2D.CreatePoint(-13.5,0)
+set line=factory2d.CreateLine(14,0,-13.5,0)
+set pk=Factory2D.CreatePoint(14,0)
+set pk=Factory2D.CreatePoint(-13.5,0)
+set line=factory2d.CreateLine(14,0,-13.5,0)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch3=sketch
+PartDocument.Part.Update
+set toolCall5=sketch3
+end function
+function toolCall6(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall6=absref
+end function
+function toolCall7(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(13.99,40.5)
+set pk=Factory2D.CreatePoint(13.99,-40.5)
+set line=factory2d.CreateLine(13.99,40.5,13.99,-40.5)
+set pk=Factory2D.CreatePoint(13.99,-40.5)
+set pk=Factory2D.CreatePoint(27.99,-40.5)
+set line=factory2d.CreateLine(13.99,-40.5,27.99,-40.5)
+set pk=Factory2D.CreatePoint(27.99,-40.5)
+set pk=Factory2D.CreatePoint(27.99,40.5)
+set line=factory2d.CreateLine(27.99,-40.5,27.99,40.5)
+set pk=Factory2D.CreatePoint(27.99,40.5)
+set pk=Factory2D.CreatePoint(13.99,40.5)
+set line=factory2d.CreateLine(27.99,40.5,13.99,40.5)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch5=sketch
+PartDocument.Part.Update
+set toolCall7=sketch5
+end function
+function toolCall8(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -13.5,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -13.5,0,-1) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -13.5,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall8=absref
+end function
+function toolCall9(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set cir=Factory2D.CreateCircle(2.2915003228263e-013,2.9487523534044e-013,20.75,4.1405787592126,4.2370016503602)
+set pk=Factory2D.CreatePoint(-9.4969193996969,-18.449146915661)
+set pk=Factory2D.CreatePoint(-2.5980762113533,-6.5)
+set line=factory2d.CreateLine(-9.4969193996969,-18.449146915661,-2.5980762113533,-6.5)
+set cir=Factory2D.CreateCircle(-2.5535129566379e-015,1.720845688169e-015,7,4.3321377736918,4.045442635881)
+set pk=Factory2D.CreatePoint(-4.3301270189222,-5.5)
+set pk=Factory2D.CreatePoint(-11.228970207266,-17.449146915661)
+set line=factory2d.CreateLine(-4.3301270189222,-5.5,-11.228970207266,-17.449146915661)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch8=sketch
+PartDocument.Part.Update
+set toolCall9=sketch8
+end function
+function toolCall10(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall10=absref
+end function
+function toolCall11(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-8.31,18.85)
+set pk=Factory2D.CreatePoint(-6.31,18.85)
+set line=factory2d.CreateLine(-8.31,18.85,-6.31,18.85)
+set pk=Factory2D.CreatePoint(-6.31,18.85)
+set pk=Factory2D.CreatePoint(-6.31,11.2310623039)
+set line=factory2d.CreateLine(-6.31,18.85,-6.31,11.2310623039)
+set pk=Factory2D.CreatePoint(-6.31,11.2310623039)
+set pk=Factory2D.CreatePoint(14,8.5)
+set line=factory2d.CreateLine(-6.31,11.2310623039,14,8.5)
+set pk=Factory2D.CreatePoint(14,8.5)
+set pk=Factory2D.CreatePoint(14,13)
+set line=factory2d.CreateLine(14,8.5,14,13)
+set pk=Factory2D.CreatePoint(14,13)
+set pk=Factory2D.CreatePoint(0,13)
+set line=factory2d.CreateLine(14,13,0,13)
+set pk=Factory2D.CreatePoint(0,13)
+set pk=Factory2D.CreatePoint(0,20.25)
+set line=factory2d.CreateLine(0,13,0,20.25)
+set pk=Factory2D.CreatePoint(0,20.25)
+set pk=Factory2D.CreatePoint(-8.31,20.25)
+set line=factory2d.CreateLine(0,20.25,-8.31,20.25)
+set pk=Factory2D.CreatePoint(-8.31,20.25)
+set pk=Factory2D.CreatePoint(-8.31,18.85)
+set line=factory2d.CreateLine(-8.31,20.25,-8.31,18.85)
+set pk=Factory2D.CreatePoint(14,0)
+set pk=Factory2D.CreatePoint(-8.31,0)
+set line=factory2d.CreateLine(14,0,-8.31,0)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch9=sketch
+PartDocument.Part.Update
+set toolCall11=sketch9
+end function
+function toolCall12(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall12=absref
+end function
+function toolCall13(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set line=factory2d.CreateLine(-13.5,16,-13.5,12.5)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set pk=Factory2D.CreatePoint(-17.15,12.5)
+set line=factory2d.CreateLine(-13.5,12.5,-17.15,12.5)
+set cir=Factory2D.CreateCircle(-17.15,12.85,0.35,3.1415926535898,4.7123889803847)
+set pk=Factory2D.CreatePoint(-17.5,12.85)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set line=factory2d.CreateLine(-17.5,12.85,-17.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch12=sketch
+PartDocument.Part.Update
+set toolCall13=sketch12
+end function
+function toolCall14(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-8,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-8,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-7,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall14=absref
+end function
+function toolCall15(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set line=factory2d.CreateLine(-13.5,16,-13.5,12.5)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set pk=Factory2D.CreatePoint(-17.15,12.5)
+set line=factory2d.CreateLine(-13.5,12.5,-17.15,12.5)
+set cir=Factory2D.CreateCircle(-17.15,12.85,0.35,3.1415926535898,4.7123889803847)
+set pk=Factory2D.CreatePoint(-17.5,12.85)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set line=factory2d.CreateLine(-17.5,12.85,-17.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch20=sketch
+PartDocument.Part.Update
+set toolCall15=sketch20
+end function
+function toolCall16(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-24,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-24,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-23,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall16=absref
+end function
+function toolCall17(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set line=factory2d.CreateLine(-13.5,16,-13.5,12.5)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set pk=Factory2D.CreatePoint(-17.15,12.5)
+set line=factory2d.CreateLine(-13.5,12.5,-17.15,12.5)
+set cir=Factory2D.CreateCircle(-17.15,12.85,0.35,3.1415926535898,4.7123889803847)
+set pk=Factory2D.CreatePoint(-17.5,12.85)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set line=factory2d.CreateLine(-17.5,12.85,-17.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch21=sketch
+PartDocument.Part.Update
+set toolCall17=sketch21
+end function
+function toolCall18(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-32,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-32,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-31,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall18=absref
+end function
+function toolCall19(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set line=factory2d.CreateLine(-13.5,16,-13.5,12.5)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set pk=Factory2D.CreatePoint(-17.15,12.5)
+set line=factory2d.CreateLine(-13.5,12.5,-17.15,12.5)
+set cir=Factory2D.CreateCircle(-17.15,12.85,0.35,3.1415926535898,4.7123889803847)
+set pk=Factory2D.CreatePoint(-17.5,12.85)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set line=factory2d.CreateLine(-17.5,12.85,-17.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch22=sketch
+PartDocument.Part.Update
+set toolCall19=sketch22
+end function
+function toolCall20(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-24,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-24,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-23,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall20=absref
+end function
+function toolCall21(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set line=factory2d.CreateLine(-13.5,16,-13.5,12.5)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set pk=Factory2D.CreatePoint(-17.15,12.5)
+set line=factory2d.CreateLine(-13.5,12.5,-17.15,12.5)
+set cir=Factory2D.CreateCircle(-17.15,12.85,0.35,3.1415926535898,4.7123889803847)
+set pk=Factory2D.CreatePoint(-17.5,12.85)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set line=factory2d.CreateLine(-17.5,12.85,-17.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch23=sketch
+PartDocument.Part.Update
+set toolCall21=sketch23
+end function
+function toolCall22(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-8,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-8,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-7,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall22=absref
+end function
+function toolCall23(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set line=factory2d.CreateLine(-13.5,16,-13.5,12.5)
+set pk=Factory2D.CreatePoint(-13.5,12.5)
+set pk=Factory2D.CreatePoint(-17.15,12.5)
+set line=factory2d.CreateLine(-13.5,12.5,-17.15,12.5)
+set cir=Factory2D.CreateCircle(-17.15,12.85,0.35,3.1415926535898,4.7123889803847)
+set pk=Factory2D.CreatePoint(-17.5,12.85)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set line=factory2d.CreateLine(-17.5,12.85,-17.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+set pk=Factory2D.CreatePoint(-17.5,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(-17.5,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch24=sketch
+PartDocument.Part.Update
+set toolCall23=sketch24
+end function
+function toolCall24(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -17.5,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -17.5,0,-1) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -17.5,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall24=absref
+end function
+function toolCall25(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set line=factory2d.CreateLine(-1.5,16.866025403784,-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set line=factory2d.CreateLine(-1.5,15.133974596216,0,14.267949192431)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set line=factory2d.CreateLine(0,14.267949192431,1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set line=factory2d.CreateLine(1.5,15.133974596216,1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set line=factory2d.CreateLine(1.5,16.866025403784,0,17.732050807569)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set line=factory2d.CreateLine(0,17.732050807569,-1.5,16.866025403784)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch30=sketch
+PartDocument.Part.Update
+set toolCall25=sketch30
+end function
+function toolCall26(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -17.5,-8,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -17.5,-8,-14.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -17.5,-7,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall26=absref
+end function
+function toolCall27(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set line=factory2d.CreateLine(-1.5,16.866025403784,-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set line=factory2d.CreateLine(-1.5,15.133974596216,0,14.267949192431)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set line=factory2d.CreateLine(0,14.267949192431,1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set line=factory2d.CreateLine(1.5,15.133974596216,1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set line=factory2d.CreateLine(1.5,16.866025403784,0,17.732050807569)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set line=factory2d.CreateLine(0,17.732050807569,-1.5,16.866025403784)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch32=sketch
+PartDocument.Part.Update
+set toolCall27=sketch32
+end function
+function toolCall28(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -17.5,-24,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -17.5,-24,-14.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -17.5,-23,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall28=absref
+end function
+function toolCall29(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set line=factory2d.CreateLine(-1.5,16.866025403784,-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set line=factory2d.CreateLine(-1.5,15.133974596216,0,14.267949192431)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set line=factory2d.CreateLine(0,14.267949192431,1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set line=factory2d.CreateLine(1.5,15.133974596216,1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set line=factory2d.CreateLine(1.5,16.866025403784,0,17.732050807569)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set line=factory2d.CreateLine(0,17.732050807569,-1.5,16.866025403784)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch33=sketch
+PartDocument.Part.Update
+set toolCall29=sketch33
+end function
+function toolCall30(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -17.5,-32,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -17.5,-32,-0.99999999999999) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -17.5,-31,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall30=absref
+end function
+function toolCall31(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set line=factory2d.CreateLine(-1.5,16.866025403784,-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set line=factory2d.CreateLine(-1.5,15.133974596216,0,14.267949192431)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set line=factory2d.CreateLine(0,14.267949192431,1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set line=factory2d.CreateLine(1.5,15.133974596216,1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set line=factory2d.CreateLine(1.5,16.866025403784,0,17.732050807569)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set line=factory2d.CreateLine(0,17.732050807569,-1.5,16.866025403784)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch34=sketch
+PartDocument.Part.Update
+set toolCall31=sketch34
+end function
+function toolCall32(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -17.5,-24,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -17.5,-24,12.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -17.5,-23,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall32=absref
+end function
+function toolCall33(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set line=factory2d.CreateLine(-1.5,16.866025403784,-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set line=factory2d.CreateLine(-1.5,15.133974596216,0,14.267949192431)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set line=factory2d.CreateLine(0,14.267949192431,1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set line=factory2d.CreateLine(1.5,15.133974596216,1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set line=factory2d.CreateLine(1.5,16.866025403784,0,17.732050807569)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set line=factory2d.CreateLine(0,17.732050807569,-1.5,16.866025403784)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch35=sketch
+PartDocument.Part.Update
+set toolCall33=sketch35
+end function
+function toolCall34(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( -17.5,-8,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( -17.5,-8,12.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( -17.5,-7,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall34=absref
+end function
+function toolCall35(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set line=factory2d.CreateLine(-1.5,16.866025403784,-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(-1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set line=factory2d.CreateLine(-1.5,15.133974596216,0,14.267949192431)
+set pk=Factory2D.CreatePoint(0,14.267949192431)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set line=factory2d.CreateLine(0,14.267949192431,1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,15.133974596216)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set line=factory2d.CreateLine(1.5,15.133974596216,1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(1.5,16.866025403784)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set line=factory2d.CreateLine(1.5,16.866025403784,0,17.732050807569)
+set pk=Factory2D.CreatePoint(0,17.732050807569)
+set pk=Factory2D.CreatePoint(-1.5,16.866025403784)
+set line=factory2d.CreateLine(0,17.732050807569,-1.5,16.866025403784)
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch36=sketch
+PartDocument.Part.Update
+set toolCall35=sketch36
+end function
+function toolCall36(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,1,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall36=absref
+end function
+function toolCall37(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-2.379,16)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set line=factory2d.CreateLine(-2.379,16,-2.379,18)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set line=factory2d.CreateLine(-2.379,18,-2,17.621)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-2,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch42=sketch
+PartDocument.Part.Update
+set toolCall37=sketch42
+end function
+function toolCall38(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-8,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-8,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-7,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall38=absref
+end function
+function toolCall39(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-2.379,16)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set line=factory2d.CreateLine(-2.379,16,-2.379,18)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set line=factory2d.CreateLine(-2.379,18,-2,17.621)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-2,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch49=sketch
+PartDocument.Part.Update
+set toolCall39=sketch49
+end function
+function toolCall40(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-24,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-24,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-23,-13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall40=absref
+end function
+function toolCall41(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-2.379,16)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set line=factory2d.CreateLine(-2.379,16,-2.379,18)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set line=factory2d.CreateLine(-2.379,18,-2,17.621)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-2,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch50=sketch
+PartDocument.Part.Update
+set toolCall41=sketch50
+end function
+function toolCall42(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-32,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-32,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-31,6.2172489379009e-015) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall42=absref
+end function
+function toolCall43(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-2.379,16)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set line=factory2d.CreateLine(-2.379,16,-2.379,18)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set line=factory2d.CreateLine(-2.379,18,-2,17.621)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-2,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch51=sketch
+PartDocument.Part.Update
+set toolCall43=sketch51
+end function
+function toolCall44(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-24,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-24,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-23,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall44=absref
+end function
+function toolCall45(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-2.379,16)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set line=factory2d.CreateLine(-2.379,16,-2.379,18)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set line=factory2d.CreateLine(-2.379,18,-2,17.621)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-2,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch52=sketch
+PartDocument.Part.Update
+set toolCall45=sketch52
+end function
+function toolCall46(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,-8,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,-8,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,-7,13.856406460551) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall46=absref
+end function
+function toolCall47(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-2.379,16)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set line=factory2d.CreateLine(-2.379,16,-2.379,18)
+set pk=Factory2D.CreatePoint(-2.379,18)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set line=factory2d.CreateLine(-2.379,18,-2,17.621)
+set pk=Factory2D.CreatePoint(-2,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-2,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-2.379,16)
+set line=factory2d.CreateLine(0,16,-2.379,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch53=sketch
+PartDocument.Part.Update
+set toolCall47=sketch53
+end function
+function toolCall48(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,0,-1) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall48=absref
+end function
+function toolCall49(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(-13.5,16)
+set pk=Factory2D.CreatePoint(-13.5,18)
+set line=factory2d.CreateLine(-13.5,16,-13.5,18)
+set pk=Factory2D.CreatePoint(-13.5,18)
+set pk=Factory2D.CreatePoint(-13.121,17.621)
+set line=factory2d.CreateLine(-13.5,18,-13.121,17.621)
+set pk=Factory2D.CreatePoint(-13.121,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set line=factory2d.CreateLine(-13.121,17.621,-0.379,17.621)
+set pk=Factory2D.CreatePoint(-0.379,17.621)
+set pk=Factory2D.CreatePoint(0,18)
+set line=factory2d.CreateLine(-0.379,17.621,0,18)
+set pk=Factory2D.CreatePoint(0,18)
+set pk=Factory2D.CreatePoint(0,16)
+set line=factory2d.CreateLine(0,18,0,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(0,16,-13.5,16)
+set pk=Factory2D.CreatePoint(0,16)
+set pk=Factory2D.CreatePoint(-13.5,16)
+set line=factory2d.CreateLine(0,16,-13.5,16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch60=sketch
+PartDocument.Part.Update
+set toolCall49=sketch60
+end function
+function toolCall50(PartDocument,HybridBody1)
+PartDocument.Part.InWorkObject =HybridBody1
+PartDocument.Part.Update
+set hypFact=PartDocument.Part.HybridShapeFactory
+Set HybridShapePointCoord0 = hypFact.AddNewPointCoord  ( 0,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord0
+PartDocument.Part.InWorkObject =HybridShapePointCoord0
+PartDocument.Part.Update
+Set HybridShapePointCoord1 = hypFact.AddNewPointCoord  ( 1,0,0) 
+HybridBody1.AppendHybridShape HybridShapePointCoord1
+PartDocument.Part.InWorkObject =HybridShapePointCoord1
+PartDocument.Part.Update
+Set HybridShapePointCoord2 = hypFact.AddNewPointCoord  ( 0,0,-1) 
+HybridBody1.AppendHybridShape HybridShapePointCoord2
+PartDocument.Part.InWorkObject =HybridShapePointCoord2
+PartDocument.Part.Update
+set Reference0 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord0 ) 
+set Reference1 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord1 ) 
+set Reference2 = PartDocument.Part.CreateReferenceFromGeometry  ( HybridShapePointCoord2 ) 
+Set absPlane = hypFact.AddNewPlane3Points  ( Reference0, Reference1, Reference2 ) 
+HybridBody1.AppendHybridShape absPlane
+PartDocument.Part.InWorkObject =absPlane
+PartDocument.Part.Update
+Set absRef = PartDocument.Part.CreateReferenceFromGeometry(absPlane)
+PartDocument.Part.Update
+set toolCall50=absref
+end function
+function toolCall51(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+set sketch= Body.Sketches.Add  ( absRef )
+PartDocument.Part.InWorkObject =sketch
+PartDocument.Part.Update
+set factory2d=sketch.OpenEdition
+Set Axis2D7 = Sketch.AbsoluteAxis
+Set Line2D8 = Axis2D7.HorizontalReference
+Line2D8.ReportName = 1
+Set Line2D9 = Axis2D7.VerticalReference
+Line2D9.ReportName = 2
+set pk=Factory2D.CreatePoint(0,-16)
+set pk=Factory2D.CreatePoint(0,-18)
+set line=factory2d.CreateLine(0,-16,0,-18)
+set pk=Factory2D.CreatePoint(0,-18)
+set pk=Factory2D.CreatePoint(-0.37900000000001,-17.621)
+set line=factory2d.CreateLine(0,-18,-0.37900000000001,-17.621)
+set pk=Factory2D.CreatePoint(-0.37900000000001,-17.621)
+set pk=Factory2D.CreatePoint(-13.121,-17.621)
+set line=factory2d.CreateLine(-0.37900000000001,-17.621,-13.121,-17.621)
+set pk=Factory2D.CreatePoint(-13.121,-17.621)
+set pk=Factory2D.CreatePoint(-13.5,-18)
+set line=factory2d.CreateLine(-13.121,-17.621,-13.5,-18)
+set pk=Factory2D.CreatePoint(-13.5,-18)
+set pk=Factory2D.CreatePoint(-13.5,-16)
+set line=factory2d.CreateLine(-13.5,-18,-13.5,-16)
+set pk=Factory2D.CreatePoint(-13.5,-16)
+set pk=Factory2D.CreatePoint(0,-16)
+set line=factory2d.CreateLine(-13.5,-16,0,-16)
+set pk=Factory2D.CreatePoint(-13.5,-16)
+set pk=Factory2D.CreatePoint(0,-16)
+set line=factory2d.CreateLine(-13.5,-16,0,-16)
+sketch.centerline=line
+PartDocument.Part.Update
+Sketch.CloseEdition
+set sketch62=sketch
+PartDocument.Part.Update
+set toolCall51=sketch62
+end function
+' *** creation code'
+Sub CreatePart1(PartDocument)
+PartDocument.GetItem(1).PartNumber="Michaud_Chailly_A9_24_5M15_261414_1"
+Dim  skCoord ( 8 )
+Dim Body As AnyObject
+Set Body = PartDocument.Part.Bodies.Item  (1)
+Dim HybridBody1 As HybridBody
+Set HybridBody1 = PartDocument.Part.HybridBodies.Add
+PartDocument.Selection.Clear
+PartDocument.Selection.Add PartDocument.Part.OriginElements.PlaneXY
+PartDocument.Selection.Add PartDocument.Part.OriginElements.PlaneYZ
+PartDocument.Selection.Add PartDocument.Part.OriginElements.PlaneZx
+PartDocument.Selection.VisProperties.SetShow(1)
+PartDocument.Selection.Clear
+PartDocument.Selection.Clear
+PartDocument.Selection.Add HybridBody1
+PartDocument.Selection.VisProperties.SetShow(1)
+PartDocument.Selection.Clear
+set absref=toolCall0(PartDocument,HybridBody1)
+set sketch3=toolCall1(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch3)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall2(PartDocument,HybridBody1)
+set sketch6=toolCall3(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch6,17.5)
+pocket.DirectionOrientation = 1
+PartDocument.Part.Update
+saveDocument PartDocument,"MIDA924_5M15_2614141",".CATPart"
+End Sub
+Set PartDocument1 = CATIA.Documents.Add  ("Part")
+CreatePart1 PartDocument1
+
+Sub CreatePart2(PartDocument)
+PartDocument.GetItem(1).PartNumber="michaud_chailly_A9_261414"
+Dim  skCoord ( 8 )
+Dim Body As AnyObject
+Set Body = PartDocument.Part.Bodies.Item  (1)
+Dim HybridBody1 As HybridBody
+Set HybridBody1 = PartDocument.Part.HybridBodies.Add
+PartDocument.Selection.Clear
+PartDocument.Selection.Add PartDocument.Part.OriginElements.PlaneXY
+PartDocument.Selection.Add PartDocument.Part.OriginElements.PlaneYZ
+PartDocument.Selection.Add PartDocument.Part.OriginElements.PlaneZx
+PartDocument.Selection.VisProperties.SetShow(1)
+PartDocument.Selection.Clear
+PartDocument.Selection.Clear
+PartDocument.Selection.Add HybridBody1
+PartDocument.Selection.VisProperties.SetShow(1)
+PartDocument.Selection.Clear
+set absref=toolCall4(PartDocument,HybridBody1)
+set sketch3=toolCall5(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch3)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall6(PartDocument,HybridBody1)
+set sketch5=toolCall7(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch5,40.5)
+pocket.IsSymmetric = True
+PartDocument.Part.Update
+set absref=toolCall8(PartDocument,HybridBody1)
+set sketch8=toolCall9(partdocument,body,absref)
+set absref=toolCall10(PartDocument,HybridBody1)
+set sketch9=toolCall11(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch8,27.5)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch9)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall12(PartDocument,HybridBody1)
+set sketch12=toolCall13(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch12)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall14(PartDocument,HybridBody1)
+set sketch20=toolCall15(partdocument,body,absref)
+set absref=toolCall16(PartDocument,HybridBody1)
+set sketch21=toolCall17(partdocument,body,absref)
+set absref=toolCall18(PartDocument,HybridBody1)
+set sketch22=toolCall19(partdocument,body,absref)
+set absref=toolCall20(PartDocument,HybridBody1)
+set sketch23=toolCall21(partdocument,body,absref)
+set absref=toolCall22(PartDocument,HybridBody1)
+set sketch24=toolCall23(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch20)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch21)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch22)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch23)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set shaft=PartDocument.Part.ShapeFactory.AddNewShaft(sketch24)
+shaft.firstAngle.value=0
+shaft.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall24(PartDocument,HybridBody1)
+set sketch30=toolCall25(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch30,1.6)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+set absref=toolCall26(PartDocument,HybridBody1)
+set sketch32=toolCall27(partdocument,body,absref)
+set absref=toolCall28(PartDocument,HybridBody1)
+set sketch33=toolCall29(partdocument,body,absref)
+set absref=toolCall30(PartDocument,HybridBody1)
+set sketch34=toolCall31(partdocument,body,absref)
+set absref=toolCall32(PartDocument,HybridBody1)
+set sketch35=toolCall33(partdocument,body,absref)
+set absref=toolCall34(PartDocument,HybridBody1)
+set sketch36=toolCall35(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch32,1.6)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch33,1.6)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch34,1.6)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch35,1.6)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set pocket=PartDocument.Part.ShapeFactory.AddNewPocket(sketch36,1.6)
+pocket.DirectionOrientation = 0
+PartDocument.Part.Update
+set absref=toolCall36(PartDocument,HybridBody1)
+set sketch42=toolCall37(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch42)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall38(PartDocument,HybridBody1)
+set sketch49=toolCall39(partdocument,body,absref)
+set absref=toolCall40(PartDocument,HybridBody1)
+set sketch50=toolCall41(partdocument,body,absref)
+set absref=toolCall42(PartDocument,HybridBody1)
+set sketch51=toolCall43(partdocument,body,absref)
+set absref=toolCall44(PartDocument,HybridBody1)
+set sketch52=toolCall45(partdocument,body,absref)
+set absref=toolCall46(PartDocument,HybridBody1)
+set sketch53=toolCall47(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch49)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch50)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch51)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch52)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch53)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall48(PartDocument,HybridBody1)
+set sketch60=toolCall49(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch60)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+set absref=toolCall50(PartDocument,HybridBody1)
+set sketch62=toolCall51(partdocument,body,absref)
+PartDocument.Part.InWorkObject = Body
+PartDocument.Part.Update
+set groove=PartDocument.Part.ShapeFactory.AddNewGroove(sketch62)
+groove.firstAngle.value=0
+groove.SecondAngle.value=360
+PartDocument.Part.Update
+saveDocument PartDocument,"MCA9_261414",".CATPart"
+End Sub
+Set PartDocument2 = CATIA.Documents.Add  ("Part")
+CreatePart2 PartDocument2
+
+
+' Create Assembly
+sub CreateAsm2
+Dim mat (11)
+Dim pin (0)
+dim docName as String
+Dim ProductDocument as Document
+set ProductDocument = CATIA.Documents.Add("Product")
+Dim Product as AnyObject
+set Product=ProductDocument.Product
+Product.PartNumber="michaud_chailly_A9_24-5M15-2614a9_2614_14"
+mat ( 0 ) =1.000000
+mat ( 1 ) =0.000000
+mat ( 2 ) =0.000000
+mat ( 3 ) =0.000000
+mat ( 4 ) =1.000000
+mat ( 5 ) =0.000000
+mat ( 6 ) =0.000000
+mat ( 7 ) =0.000000
+mat ( 8 ) =1.000000
+mat ( 9 ) =0.000000
+mat ( 10) =0.000000
+mat ( 11) =0.000000
+set newProd=Product.Products.AddComponent (PartDocument1.GetItem(1))
+NewProd.Move.Apply mat
+mat ( 0 ) =-1.000000
+mat ( 1 ) =0.000000
+mat ( 2 ) =0.000000
+mat ( 3 ) =0.000000
+mat ( 4 ) =-1.000000
+mat ( 5 ) =0.000000
+mat ( 6 ) =0.000000
+mat ( 7 ) =0.000000
+mat ( 8 ) =1.000000
+mat ( 9 ) =-13.500000
+mat ( 10) =0.000000
+mat ( 11) =0.000000
+set newProd=Product.Products.AddComponent (PartDocument2.GetItem(1))
+NewProd.Move.Apply mat
+saveDocument ProductDocument,"MIDA924_5M15_261414",".CATProduct"
+end sub
+
+createAsm2
+PartDocument1.Activate
+CATIA.ActiveWindow.Close
+PartDocument1.Close
+PartDocument2.Activate
+CATIA.ActiveWindow.Close
+PartDocument2.Close

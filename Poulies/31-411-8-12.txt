@@ -1,0 +1,9 @@
+﻿"Symbol";"Value";"Unit";
+"TraceParts.PartNumber";"10-06082008-152879";"";
+"TraceParts.ClassPath";"EMILE_MAURIN:10-06082008-152879";"";
+"TraceParts.InstanceId";"10-06082008-15287938YKZQ3KA896R4JMJ2TYSUK5J";"";
+"REFERENCE";"31-411-8-12";"";
+"TRACEPARTS";"TRACEPARTS";"";
+"SUPPLIER";"Emile Maurin";"";
+"TraceParts.PartStatus";"Published";"";
+"TraceParts.PartVersion";"1.1.8";"";

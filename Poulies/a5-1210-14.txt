@@ -1,0 +1,9 @@
+﻿"Symbol";"Value";"Unit";
+"TraceParts.PartNumber";"10-17102008-127847";"";
+"TraceParts.ClassPath";"MICHAUD_CHAILLY:10-17102008-127847";"";
+"TraceParts.InstanceId";"10-17102008-127847BOLDOHFB3RURKQ3ZHC9MAPIHT";"";
+"REFERENCE";"A5-1210-14";"";
+"TRACEPARTS";"TRACEPARTS";"";
+"SUPPLIER";"Michaud Chailly";"";
+"TraceParts.PartStatus";"Published";"";
+"TraceParts.PartVersion";"1.0.6";"";
