@@ -1,0 +1,3 @@
+﻿"Symbol";"Value";"Unit";
+"REFERENCE";"31-411-5-20";"";
+"SUPPLIER";"Emile Maurin";"";
